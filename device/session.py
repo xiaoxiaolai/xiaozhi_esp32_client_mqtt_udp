@@ -46,9 +46,9 @@ class Session:
         self.udp_key = None
         self.udp_nonce = None
         
-        # if self.udp is not None:
-        #     self.udp.close()
-        #     self.udp = None
+        if self.udp is not None:
+            self.udp.close()
+            self.udp = None
             
         # self.receive_thread = None
 
