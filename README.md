@@ -13,7 +13,7 @@
 - python app.py
 
 ## 演示🚀
-<video src="./docs/test.mov"></video>
+![](./docs/test.gif)
 
 ## 鸣谢 🙏
 
