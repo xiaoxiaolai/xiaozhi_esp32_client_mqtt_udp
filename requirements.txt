@@ -2,5 +2,5 @@ pyyml==0.0.2
 cryptography==44.0.1
 opuslib==3.0.1
 paho-mqtt==2.1.0
-pyaudio==0.2.9
+pyaudio==0.2.14
 requests==2.31.0
