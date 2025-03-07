@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
           fetch-tags: true
       - name: Set up QEMU (optional)
         uses: docker/setup-qemu-action@v3
@@ -50,7 +50,7 @@ jobs:
         run: |
           docker buildx build \
           -f Dockerfile \
-          --platform linux/amd64,linux/arm64 \
+          --platform linux/amd64 \
           --label "org.opencontainers.image.description=xiaozhi esp32 client image" \
           --push \
           --cache-from=type=local,src=/tmp/.buildx-cache \
