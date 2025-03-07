@@ -12,7 +12,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
+          fetch-tags: true
       - name: Set up QEMU (optional)
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
@@ -38,8 +39,6 @@ jobs:
       # Set tag
       - name: Get Latest Tag
         run: echo "TAG_NAME=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
-      - name: Get Latest Tag
-        run: echo "$(git describe --tags --abbrev=0)" 
       - name: Set image name and tag
         run: |
           if [[ "${{ github.ref_name }}" == "main" ]]; then
