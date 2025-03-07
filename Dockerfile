@@ -10,7 +10,7 @@ RUN apt update && apt install -y \
 
 WORKDIR /src
 
-RUN git clone --depth 1 https://github.com/seasalt-ai/snowboy.git && \
+RUN git clone --depth 1 https://github.com/xiaoxiaolai/snowboy.git && \
     cd snowboy/swig/Python3 && \
     make
 
