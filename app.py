@@ -16,7 +16,7 @@ from snowboy import snowboydecoder
 def main():
     config = load_config()
     logger = setup_logging(config['logger'])
-
+    print("Starting...")
     session = Session()
     session.set_state(state=Status.Starting)
     audio = pyaudio.PyAudio()
@@ -62,6 +62,7 @@ def main():
         if msg['state'] == 'stop':
             if session.state == Status.Speaking:
                 mqtt.send_start_auto_listening(session_id=session.id)
+                time.sleep(0.3)
                 session.set_state(state=Status.Listening)
         if msg['state'] == 'sentence_start':
             m = msg['text']

@@ -1,6 +1,7 @@
 ota:
   url: https://api.tenclass.net/xiaozhi/ota/
-  device_id: 需要替换成自己板子的mac地址
+  # 需要替换成自己板子的mac地址
+  device_id: ${DEVICE_ID}
   data: 
     flash_size: 4194304
     minimum_free_heap_size: 123456
