@@ -50,7 +50,7 @@ jobs:
         run: |
           docker buildx build \
           -f Dockerfile \
-          --platform linux/amd64 \
+          --platform linux/amd64,linux/arm64 \
           --label "org.opencontainers.image.description=xiaozhi esp32 client image" \
           --push \
           --cache-from=type=local,src=/tmp/.buildx-cache \
