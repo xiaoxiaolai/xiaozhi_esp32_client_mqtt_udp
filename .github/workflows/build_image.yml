@@ -37,11 +37,13 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # Set tag
+      - name: Get Latest Tag
+        run: echo "TAG_NAME=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
       - name: Set image name and tag
         run: |
           if [[ "${{ github.ref_name }}" == "main" ]]; then
-            echo "Git_Tag=xiaozhi_esp32_client_mqtt_udp:$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
-            echo "Git_Latest=xiaozhi_esp32_client_mqtt_udp:latest" >> $GITHUB_ENV
+            echo "Git_Tag=ghcr.io/${{ github.actor }}/xiaozhi_esp32_client_mqtt_udp:${TAG_NAME}" >> $GITHUB_ENV
+            echo "Git_Latest=ghcr.io/${{ github.actor }}/xiaozhi_esp32_client_mqtt_udp:latest" >> $GITHUB_ENV
           fi
 
       - name: Build and publish image for main branch or tag push event
