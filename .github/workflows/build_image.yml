@@ -55,6 +55,7 @@ jobs:
           --push \
           --cache-from=type=local,src=/tmp/.buildx-cache \
           --cache-to=type=local,dest=/tmp/.buildx-cache \
+          --provenance \
           -t ${Git_Tag} \
           -t ${Git_Latest} \
           .
