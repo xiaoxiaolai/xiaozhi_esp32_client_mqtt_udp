@@ -7,6 +7,8 @@ on:
 jobs:
   build-images:
     runs-on: ubuntu-latest
+    # 条件判断: 确保 tag 是从 main 分支打出来的
+    if: startsWith(github.ref, 'refs/tags/v') && github.base_ref == 'main'
     steps:
       # install env
       - name: Checkout
@@ -41,11 +43,8 @@ jobs:
         run: echo "TAG_NAME=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
       - name: Set image name and tag
         run: |
-          if [[ "${{ github.ref_name }}" == "main" ]]; then
-            echo "Git_Tag=ghcr.io/${{ github.actor }}/xiaozhi_esp32_client_mqtt_udp:${TAG_NAME}" >> $GITHUB_ENV
-            echo "Git_Latest=ghcr.io/${{ github.actor }}/xiaozhi_esp32_client_mqtt_udp:latest" >> $GITHUB_ENV
-          fi
-
+          echo "Git_Tag=ghcr.io/${{ github.actor }}/xiaozhi_esp32_client_mqtt_udp:${TAG_NAME}" >> $GITHUB_ENV
+          echo "Git_Latest=ghcr.io/${{ github.actor }}/xiaozhi_esp32_client_mqtt_udp:latest" >> $GITHUB_ENV
       - name: Build and publish image for main branch or tag push event
         run: |
           docker buildx build \
