@@ -62,7 +62,7 @@ def main():
         if msg['state'] == 'stop':
             if session.state == Status.Speaking:
                 mqtt.send_start_auto_listening(session_id=session.id)
-                time.sleep(0.3)
+                time.sleep(0.35)
                 session.set_state(state=Status.Listening)
         if msg['state'] == 'sentence_start':
             m = msg['text']
