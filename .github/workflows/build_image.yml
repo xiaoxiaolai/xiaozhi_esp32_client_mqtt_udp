@@ -20,6 +20,10 @@ jobs:
           fetch-tags: true
       - name: Print GitHub Context
         run: echo '${{ toJson(github) }}'
+      - name: Print Specific Variables
+        run: |
+          echo "github.ref: ${{ github.ref }}"
+          echo "github.base_ref: ${{ github.base_ref }}"
       - name: Set up QEMU (optional)
         uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
