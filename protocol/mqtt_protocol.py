@@ -38,7 +38,7 @@ class MqttProtocol:
                 "format": "opus",
                 "sample_rate":16000,
                 "channels":1,
-                "frame_duration": "60"
+                "frame_duration": 60
             }
         }
         publish_topic = self.mqtt['publish_topic']
