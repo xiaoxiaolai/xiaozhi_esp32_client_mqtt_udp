@@ -2,8 +2,12 @@
 
 ## 已测试环境🛠️
 - python3.9
-- mac x86（已提供本环境的snowboy二进制文件）
+- mac x86_64/arm64
 - 默认检测词（小来）
+- brew install opus portaudio
+- pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple
+- export DYLD_LIBRARY_PATH="$(brew --prefix opus)/lib:$(brew --prefix portaudio)/lib:$DYLD_LIBRARY_PATH"
+-  DEVICE_ID=xx:xx:xx:xx:xx:xx python app.py
 
 ## 使用方式📏
 - [编译符合使用环境的snowboy二进制文件并替换](./snowboy/_snowboydetect.so) [参考snowboy](https://github.com/seasalt-ai/snowboy/blob/master/README_ZH_CN.md)

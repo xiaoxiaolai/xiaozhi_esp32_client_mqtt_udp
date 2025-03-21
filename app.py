@@ -49,8 +49,11 @@ def main():
         client_socket.connect((session.udp_server, session.udp_port))
         session.udp = client_socket
         session.set_upd_receive_task(udp_audio_callback)
+        mqtt.send_iot_descriptors(session_id=session.id)
 
     def goodbye_handler(client, msg):
+        if msg['session_id'] is not None:
+            mqtt.send_goodbye(session_id=msg['session_id'])
         if session.id == msg['session_id']:
             session.terminate()
         detector.restart()
@@ -62,7 +65,7 @@ def main():
         if msg['state'] == 'stop':
             if session.state == Status.Speaking:
                 mqtt.send_start_auto_listening(session_id=session.id)
-                time.sleep(0.35)
+                time.sleep(1)
                 session.set_state(state=Status.Listening)
         if msg['state'] == 'sentence_start':
             m = msg['text']
@@ -113,6 +116,7 @@ def main():
                 wake_word=config['snowboy']['wake_word']
                 )
             session.set_state(state=Status.Listening)
+            mqtt.send_iot_states(session_id=session.id)
 
     session.set_state(state=Status.Idle)
 

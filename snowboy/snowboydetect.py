@@ -4,10 +4,23 @@
 # Do not make changes to this file unless you know what you are doing - modify
 # the SWIG interface file instead.
 
-from sys import version_info as _swig_python_version_info
-# Import the low-level C/C++ module
+import platform
+import importlib
+from pathlib import Path
+
+os_name = platform.system().lower()
+arch = platform.machine().lower()
+
+module_name = f"_snowboydetect_{os_name}_{arch}"
+# # Import the low-level C/C++ module
 if __package__ or "." in __name__:
-    from . import _snowboydetect
+    package_path = Path(__file__).parent.resolve()
+    spec = importlib.util.spec_from_file_location(
+        "_snowboydetect", 
+        package_path / f"{module_name}.so"  # 或 .dylib/.pyd
+    )
+    _snowboydetect = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(_snowboydetect)
 else:
     import _snowboydetect
 

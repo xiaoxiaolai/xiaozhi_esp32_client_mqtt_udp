@@ -38,12 +38,10 @@ class MqttProtocol:
                 "format": "opus",
                 "sample_rate":16000,
                 "channels":1,
-                "frame_duration": "60"
+                "frame_duration": 60
             }
         }
-        publish_topic = self.mqtt['publish_topic']
-        res = self.client.publish(publish_topic, payload=json.dumps(message))
-        logger.debug("send_hello, %s", res)
+        self.send_mqtt_message(message)
 
     def send_wake_word_detected(self, session_id, wake_word):
         message = {
@@ -52,9 +50,7 @@ class MqttProtocol:
             "state": "detect",
             "text": wake_word
         }
-        publish_topic = self.mqtt['publish_topic']
-        res = self.client.publish(publish_topic, payload=json.dumps(message))
-        logger.debug("send_wake_word_detected, %s", res)
+        self.send_mqtt_message(message)
 
     def send_start_auto_listening(self, session_id):
         message = {
@@ -63,9 +59,91 @@ class MqttProtocol:
             "state": "start",
             "mode": "auto",
         }
+        self.send_mqtt_message(message)
+
+    def send_iot_descriptors(self, session_id):
+        message = {
+            "session_id": session_id,
+            "type": "iot",
+            "descriptors": [
+                {
+                    "name": "Speaker",
+                    "description": "当前 AI 机器人的扬声器",
+                    "properties": {
+                        "volume": {
+                        "description": "当前音量值",
+                        "type": "number"
+                        }
+                    },
+                    "methods": {
+                        "SetVolume": {
+                            "description": "设置音量",
+                            "parameters": {
+                                "volume": {
+                                "description": "0到100之间的整数",
+                                "type": "number"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Lamp",
+                    "description": "一个测试用的灯",
+                    "properties": {
+                        "power": {
+                        "description": "灯是否打开",
+                        "type": "boolean"
+                        }
+                    },
+                    "methods": {
+                        "TurnOn": {
+                        "description": "打开灯",
+                        "parameters": {}
+                        },
+                        "TurnOff": {
+                        "description": "关闭灯",
+                        "parameters": {}
+                        }
+                    }
+                }
+         ]
+        }
+        self.send_mqtt_message(message)
+
+    def send_iot_states(self, session_id):
+        message = {
+            "session_id": session_id,
+            "type": "iot",
+            "states": [
+                {
+                    "name": "Speaker",
+                    "state": {
+                        "volume": 0
+                    }
+                },
+                {
+                    "name": "Lamp",
+                    "state": {
+                        "power": False
+                    }
+                }
+            ]
+        }
+        self.send_mqtt_message(message)
+
+    def send_goodbye(self, session_id):
+        message = {
+            "session_id": session_id,
+            "type": "goodbye"
+        }
+        self.send_mqtt_message(message)
+
+    def send_mqtt_message(self, message):
         publish_topic = self.mqtt['publish_topic']
-        self.client.publish(publish_topic, payload=json.dumps(message))
-        
+        res = self.client.publish(publish_topic, payload=json.dumps(message))
+        logger.info("publish_topic %s, send_mqtt_message, %s %s", publish_topic, res, json.dumps(message))
+
     def on_message(self, callback):
         self.client.on_message = callback
 

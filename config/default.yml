@@ -39,5 +39,5 @@ logger:
 
 snowboy:
   detector_model: ./snowboy/resources/xiaolai.pmdl
-  sensitivity: 0.5
+  sensitivity: 0.8
   wake_word: 你好,小智
