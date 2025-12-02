@@ -1,0 +1,17 @@
+[project]
+name = "xiaozhi-esp32-client-mqtt-udp"
+version = "0.1.0"
+description = "xiaozhi cli client"
+readme = "README.md"
+requires-python = "==3.9.23"
+dependencies = [
+    "aiohttp==3.12.13",
+    "cryptography==44.0.1",
+    "opuslib==3.0.1",
+    "paho-mqtt==2.1.0",
+    "psutil==7.0.0",
+    "py-machineid==0.8.0",
+    "pyaudio==0.2.14",
+    "pyyml==0.0.2",
+    "requests==2.31.0",
+]

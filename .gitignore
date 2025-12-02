@@ -1,4 +1,5 @@
 /tmp
+__pycache__
 **/__pycache__/*
 
 /logs
@@ -6,4 +7,8 @@
 
 .vscode
 
-/config/dev.yml
+/config/*
+!/config/default.yml
+!/config/load.py
+
+.venv

@@ -21,9 +21,17 @@ class MqttProtocol:
             callback_api_version = CallbackAPIVersion.VERSION2,
             client_id=mqtt['client_id'],
             reconnect_on_failure=True,
-            protocol=paho.MQTTv5)
+        )
+            
         self.client.username_pw_set(mqtt['username'], mqtt['password'])
-        self.client.connect(mqtt['endpoint'], 1883)
+        self.client.tls_set(
+            ca_certs=None,
+            certfile=None,
+            keyfile=None,
+            cert_reqs=paho.ssl.CERT_REQUIRED,
+            tls_version=paho.ssl.PROTOCOL_TLS,
+        )
+        self.client.connect(mqtt['endpoint'], 8883)
         self.client.loop_start()
         self.client.on_connect = _on_connect
         self.client.on_disconnect = _on_disconnect
